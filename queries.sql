@@ -3,6 +3,7 @@ id int,
 employer varchar(255),
 name varchar(255),
 skills varchar(255)
+testpush
 
 -- Part 2: Test it with SQL
 
