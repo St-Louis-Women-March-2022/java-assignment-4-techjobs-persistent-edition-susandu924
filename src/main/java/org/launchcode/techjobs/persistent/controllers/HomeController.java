@@ -57,26 +57,21 @@ public class HomeController {
 
         if (errors.hasErrors()) {
 //       ?     model.addAttribute("title", "Add Job");
-            List employers = (List<Employer>) employerRepository.findAll();
-            model.addAttribute("employers", employers);
-            List skills1 = (List<Skill>) skillRepository.findAll();
-            model.addAttribute("skills", skills1);
             return "add";
         }
-        Employer employer = employerRepository.findById(employerId).orElse(new Employer());
-        newJob.setEmployer(employer);
-        model.addAttribute("employers", employerRepository.save(employer));
+        {
+            Employer employer = employerRepository.findById(employerId).orElse(new Employer());
+            newJob.setEmployer(employer);
+            model.addAttribute("employers", employerRepository.save(employer));
 
-//        List<Integer>  = new List;
-//        Skill skill = skillRepository.findById(skills).orElse(new Skill());
-//        newJob.setSkills(String.valueOf(skill));
-//        model.addAttribute("skills", skillRepository.save(skill));
+            List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+            newJob.setSkills(skillObjs);
+//            model.addAttribute("skills", skillRepository.findAll());
 
-//        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-//        newJob.setSkills(skillObjs.toString());
 
-        jobRepository.save(newJob);
-        return "redirect:";
+            jobRepository.save(newJob);
+            return "redirect:";
+        }
     }
 
     @GetMapping("view/{jobId}")

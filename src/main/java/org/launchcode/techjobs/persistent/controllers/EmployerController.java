@@ -32,7 +32,7 @@ public class EmployerController {
 //        return "employers/index";
 //    }
 
-    @GetMapping
+    @GetMapping("")
     public String index (Model model){
         model.addAttribute("title", "All Employers");
         List employers = (List<Employer>) employerRepository.findAll();
