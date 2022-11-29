@@ -54,7 +54,7 @@ public class EmployerController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Employer");
 //            model.addAttribute(newEmployer);
-            return "";
+            return "employers/add";
         }
 //        model.addAttribute(newEmployer);
         employerRepository.save(newEmployer);
