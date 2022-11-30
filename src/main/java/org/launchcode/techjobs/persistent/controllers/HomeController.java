@@ -19,6 +19,11 @@ import java.util.Optional;
 /**
  * Created by LaunchCode
  */
+
+
+//Added an autowired employerRepository. User selects an employer when they create a job.
+// the employer data from the employerRepository gets added to the form template. They can select an employer from the drop down
+//    select html in the add.html template.
 @Controller
 public class HomeController {
 
@@ -41,10 +46,12 @@ public class HomeController {
         return "index";
     }
 
+//    renders the add job form, at add.html
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
         model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
+
 
         List employers = (List<Employer>) employerRepository.findAll();
         model.addAttribute("employers", employers);
@@ -55,6 +62,17 @@ public class HomeController {
         return "add";
     }
 
+//    after they add the name, employer, and skills, this handler processes that information. Checks validation of the Job Model.
+//    Will only query database for skills if valid.
+//    and requests an integer type of employerId and requests a list of type Integer skills.
+//    searches the employer and skill repository. if it doesnt find, it returns the user to add job form.
+//    If no errors, it looks for the employerId, if it doesnt find one, it makes a new Employer object and adds that new employer to the
+//    jobRepository under the generic parameter name for this handler, newJob. Same on skill, looks for the skill theyre trying to add
+//    if not found it makes a new skill and adds to the skills list. then it sets the skills list onto the generic newJob.
+
+//    @RequestParam List<Integer> skills passes skills into the add.html form control group that iterates over a list of skills,
+//    and renders a checkbox for each added skill. To get the skills data from a list of ids,
+//    I used the CrudRepository method findAllById(skills).
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                     Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
@@ -84,6 +102,7 @@ public class HomeController {
 
     }
 
+//    searches jobRepository by job id so user can view. if not found it returns user to index.
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
         Optional<Job> optJob = jobRepository.findById(jobId);

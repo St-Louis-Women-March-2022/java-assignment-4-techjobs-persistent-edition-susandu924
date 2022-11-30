@@ -12,6 +12,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+
+//Added a private EmployerRepository object with @autowired annotation, which allows AbstractEntity to
+//handle data related to the Ids/primary keys of subclasses???
 @Controller
 @RequestMapping("employers")
 public class EmployerController {
@@ -19,19 +22,9 @@ public class EmployerController {
     @Autowired
     private EmployerRepository employerRepository;
 
-//    two handlers with missing information. Your task here is to make use of the EmployerRepository class in these handlers.
-    //    Add an index method that responds at /employers with a list of all employers in the database.
-//    This method should use the template employers/index.
-//    To figure out the name of the model attribute you should use to pass employers into the view, review this template.
-//    @GetMapping("")
-//    public String index(Model model){
-//        model.addAttribute("Employers", "employers");
-//        List employers = new ArrayList<Employer>();
-//        employerRepository.findAll(employers);
-//        model.addAttribute("employers", employers);
-//        return "employers/index";
-//    }
 
+//    @GetMapping sends a request to index for a list of employers. added index method, that responds with a list of employers. Created a List object named employers, and added it to the
+//    model form at the template, employers/index with a list of all the employers in the database.
     @GetMapping("")
     public String index (Model model){
         model.addAttribute("title", "All Employers");
@@ -47,6 +40,9 @@ public class EmployerController {
         return "employers/add";
     }
 
+//    Checks to see if the Employer object is valid and if there are any errors, if so, it sends the user
+//    back to the add employer page to try again. if not, then it adds a new employer
+//    to the employerRepository database.
     @PostMapping("add")
     public String processAddEmployerForm(@ModelAttribute @Valid Employer newEmployer,
                                     Errors errors, Model model) {
@@ -62,6 +58,7 @@ public class EmployerController {
         return "redirect:../";
     }
 
+//    displays an individual employer by the employer id
     @GetMapping("view/{employerId}")
     public String displayViewEmployer(Model model, @PathVariable int employerId) {
 
