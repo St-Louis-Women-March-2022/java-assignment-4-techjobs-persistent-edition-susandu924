@@ -72,9 +72,6 @@ public class HomeController {
         newJob.setEmployer(employer);
 
         List<Skill> skillObs = (List<Skill>) skillRepository.findAllById(skills);
-//        if (skillObs.isEmpty()) {
-//            List<Skill> newSkill = (List<Skill>)
-//        }
         newJob.setSkills(skillObs);
 
         jobRepository.save(newJob);
