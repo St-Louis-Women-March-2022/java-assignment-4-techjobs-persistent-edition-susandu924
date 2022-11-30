@@ -62,7 +62,9 @@ public class HomeController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
             List employers = (List<Employer>) employerRepository.findAll();
+            List<Skill> skillObs = (List<Skill>) skillRepository.findAll();
             model.addAttribute("employers", employers);
+            model.addAttribute("skills", skillObs);
             return "add";
         }
 
@@ -70,6 +72,9 @@ public class HomeController {
         newJob.setEmployer(employer);
 
         List<Skill> skillObs = (List<Skill>) skillRepository.findAllById(skills);
+//        if (skillObs.isEmpty()) {
+//            List<Skill> newSkill = (List<Skill>)
+//        }
         newJob.setSkills(skillObs);
 
         jobRepository.save(newJob);
