@@ -74,8 +74,9 @@ public class HomeController {
 //        List<Skill> skillObs = (List<Skill>) skillRepository.findAllById(skills);
 //        newJob.setSkills(skillObs);
 
-        List skillObs = (List<Skill>) skillRepository.findAllById(skills);
-        newJob.setSkills(skillObs);
+        Iterable<Skill> skillObs = skillRepository.findAllById(skills);
+        newJob.setSkills((List<Skill>) skillObs);
+//        List<Skill> cannot be converted to a String.
 //        line 78 cant be converted to a STRING idk how to fix? newJob is type Job. setSkills is a List<Skill> type, in class Job
 
         jobRepository.save(newJob);
